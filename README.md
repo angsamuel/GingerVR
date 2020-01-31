@@ -53,10 +53,10 @@ Our implementation was inspired by the following:
 
 Budhiraja, Pulkit, et al. "Rotation blurring: use of artificial blurring to reduce cybersickness in virtual reality first person shooters." arXiv preprint arXiv:1710.02599 (2017).
 
-### DynamicSaliencyBlur 
-The DynamicSaliencyBlur script dynamically blurs the user’s vision based on their translational speed. Portions of the image surpassing the specified color thresholds (i.e. brightness) are not dynamically blurred. 
+### ColorBlur 
+The ColorBlur script dynamically blurs the user’s vision based on their translational speed. Portions of the image surpassing the specified color thresholds (i.e. brightness) are not dynamically blurred. 
 
-To use DynamicSaliencyBlur, attach the script to the main camera, and configure with the following options:
+To use ColorBlur, attach the script to the main camera, and configure with the following options:
 * Sigma Maximum (float) - the maximum sigma value that can be used in the gaussian function (larger sigma value = more blurring).
 * Angular Speed Threshold (float) - the speed (degrees per second) at which the user’s vision begins blurring.
 * Angular Speed Maximum (float) - the speed (degrees per second) at which the image is blurred as much as Sigma Maximum allows.
