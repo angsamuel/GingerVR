@@ -21,10 +21,10 @@ Our implementation was inspired by the following:
 Wienrich, Carolin, et al. "A Virtual Nose as a Rest-Frame-The Impact on Simulator Sickness and Game Experience." 2018 10th International Conference on Virtual Worlds and Games for Serious Applications (VS-Games). IEEE, 2018.
 
 
-### DoubleNose
-The DoubleNose prefab acts as a rest-frame for the user.
+### AuthenticNose
+The AuthenticNose prefab acts as a rest-frame for the user.
 
-To use DoubleNose prefab must be used in tandem with the OVRCameraRig asset from the Unity Standard Assets package. Click the “Use Per Eye Camera” box on the OVRCameraRig. Drag the DoubleNose  prefab into the scene, and DoubleNose will automatically attach two nose models, one to each per eye camera. Each nose model is only visible through the corresponding camera, providing a more realistic representation of a human nose. Configure the noses in the Unity Editor with the following options:
+To use AuthenticNose prefab must be used in tandem with the OVRCameraRig asset from the Unity Standard Assets package. Click the “Use Per Eye Camera” box on the OVRCameraRig. Drag the DoubleNose  prefab into the scene, and AuthenticNose will automatically attach two nose models, one to each per eye camera. Each nose model is only visible through the corresponding camera, providing a more realistic representation of a human nose. Configure the noses in the Unity Editor with the following options:
 * Spacing(slider) - configures how far apart the two nose models are.
 * Y Position(slider) -configures the y-axis position of the nose
 * Z Position (slider) - configures the z-axis position of the nose
