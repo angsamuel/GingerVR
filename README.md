@@ -1,5 +1,5 @@
 # Cybersickness Reduction Techniques
- This is a collection of programatic techniques to help reduce cybersickness when using head mounted displays.
+ This is a collection of programatic techniques to help reduce cybersickness when using head mounted displays. To make use of these techniques, drag the GingerVR-master folder into your project's resources folder.
 
 ## Techniques
 The following techniques can be found in the Prefabs and Scripts folders. Instructions on how to set them up are given below.
