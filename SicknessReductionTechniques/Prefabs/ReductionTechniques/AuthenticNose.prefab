@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2877694772761543463}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.4, y: 0, z: 0}
+  m_LocalPosition: {x: -0.5, y: 0, z: 0.4}
   m_LocalScale: {x: 0.1, y: 0.15, z: 0.09}
   m_Children: []
   m_Father: {fileID: 2877694773186795441}
@@ -54,6 +54,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -89,7 +90,7 @@ GameObject:
   - component: {fileID: 2877694773186795441}
   - component: {fileID: 2877694773186795440}
   m_Layer: 0
-  m_Name: DoubleNose
+  m_Name: AuthenticNose
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -125,12 +126,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftEyeNoseModel: {fileID: 2877694773333609122}
   rightEyeNoseModel: {fileID: 2877694772761543463}
-  spacing: 0
+  spacing: 0.5
   yPosition: 0.5
-  zPosition: 0.5
-  noseWidth: 1
-  noseFlatness: 1
-  noseColor: {r: 0.754717, g: 0.3809185, b: 0.3809185, a: 0.57254905}
+  zPosition: 0
+  noseWidth: 0.5
+  noseFlatness: 0.5
+  noseColor: {r: 0.754717, g: 0.3809185, b: 0.3809185, a: 1}
 --- !u!1 &2877694773333609122
 GameObject:
   m_ObjectHideFlags: 0
@@ -157,7 +158,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2877694773333609122}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.4, y: 0, z: 0}
+  m_LocalPosition: {x: 0.5, y: 0, z: 0.4}
   m_LocalScale: {x: 0.1, y: 0.15, z: 0.09}
   m_Children: []
   m_Father: {fileID: 2877694773186795441}
@@ -185,6 +186,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

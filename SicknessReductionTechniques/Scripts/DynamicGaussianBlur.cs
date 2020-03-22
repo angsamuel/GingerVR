@@ -8,15 +8,19 @@ public class DynamicGaussianBlur : MonoBehaviour
     public Material blurMaterial; //create material from shader and attatch here
     public float sigmaMaximum = 15f;
     public float angularAccelerationThreshold = 40f;
+    public float accelerationModifier = 0.0001f;
 
     [Range(0, 10)]
     public int smoothness = 1;
-    [Range(.5f,20)]
-    public float sigma = 0.5f;
+    [Range(0f,20)]
+    public float sigma = 0.35f;
     float[] kernel;
     
     void Start(){
         //initialize to some random matrix
+        if(blurMaterial == null){
+            blurMaterial = Resources.Load("GingerVR-master/SicknessReductionTechniques/Materials/GaussianBlurMat") as Material;
+        }
         kernel = new float[121];
         angularVelocity = new Vector3(0,0,0);
         lastRotation = new Vector3(0,0,0);
@@ -55,15 +59,15 @@ public class DynamicGaussianBlur : MonoBehaviour
         
     }
 
-    public bool adjustBasedOnRotation = true;
+    public bool useEditorValue = true;
     void OnRenderImage(RenderTexture src, RenderTexture dst)
     {
 
         
         //calculate sigma, standard deviation
-        if(adjustBasedOnRotation){
+        if(!useEditorValue){
 
-            sigma = Mathf.Lerp(0.5f, sigmaMaximum, (angularAcceleration.magnitude - angularAccelerationThreshold) );
+            sigma = Mathf.Lerp(0f, sigmaMaximum, (angularAcceleration.magnitude - angularAccelerationThreshold)*accelerationModifier);
         }
 
         //float kernelSum = kernel.Sum();
@@ -72,7 +76,7 @@ public class DynamicGaussianBlur : MonoBehaviour
         //initialize to some 
         for(int x = 0; x<11; x++){
             for(int y = 0; y<11; y++){
-                kernel[y*11 + x] = GaussianFunction(x-5.0f, y-5.0f,sigma); //update kernel
+                kernel[y*11 + x] = GaussianFunction(x-5, y-5,sigma); //update kernel
             
         }
         //calculate sum for later
@@ -95,16 +99,22 @@ public class DynamicGaussianBlur : MonoBehaviour
         Graphics.Blit(src, renderTexture); //copies source texture to destination texture
 
         //apply the render texture as many iterations as specified
-        for (int i = 0; i < smoothness; i++)
-        {
-            RenderTexture tempTexture = RenderTexture.GetTemporary(src.width, src.height); //creates a quick temporary texture for calculations
-            Graphics.Blit(renderTexture, tempTexture, blurMaterial);
-            RenderTexture.ReleaseTemporary(renderTexture); //releases the temporary texture we got from GetTemporary 
-            renderTexture = tempTexture;
+        if(sigma > 0.35f){
+            for (int i = 0; i < smoothness; i++)
+            {
+                RenderTexture tempTexture = RenderTexture.GetTemporary(src.width, src.height); //creates a quick temporary texture for calculations
+                Graphics.Blit(renderTexture, tempTexture, blurMaterial);
+                RenderTexture.ReleaseTemporary(renderTexture); //releases the temporary texture we got from GetTemporary 
+                renderTexture = tempTexture;
+            }
         }
 
-        Graphics.Blit(renderTexture, dst);
-        RenderTexture.ReleaseTemporary(renderTexture);
+
+            Graphics.Blit(renderTexture, dst);
+        
+            RenderTexture.ReleaseTemporary(renderTexture);
+        }   
+        
     }
 
     float GaussianFunction(float x, float y, float sigma){
@@ -113,5 +123,4 @@ public class DynamicGaussianBlur : MonoBehaviour
         float answer = p1 * Mathf.Exp(eExponent);
         return answer;
     }
-}
 }

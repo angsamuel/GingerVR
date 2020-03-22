@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [ExecuteInEditMode]
-public class DynamicSaliencyBlur : MonoBehaviour
+public class DynamicColorBlur : MonoBehaviour
 {
-    public Material saliencyBlurMaterial; //create material from shader and attatch here
+    public Material blurMaterial; //create material from shader and attatch here
     public float sigmaMaximum = 15f;
     public float angularSpeedThreshold = 40f;
-    public float angularSpeedMaximum = 360f;
+    public float angularSpeedModifier = 0.0001f;
     [Range(0, 10)]
     public int smoothness;
 
@@ -24,15 +24,18 @@ public class DynamicSaliencyBlur : MonoBehaviour
     [Range(0,1)]
     public float blueThreshold;
 
-    public bool darkSaliency = false;
+    public bool flipThresholds = false;
 
 
-    [Range(.1f,10)]
+    [Range(.01f,10)]
     public float sigma;
     float[] kernel;
 
     void Start(){
         //initialize to some random matrix
+        if(blurMaterial == null){
+            blurMaterial = Resources.Load("GingerVR-master/SicknessReductionTechniques/Materials/ColorBlurMat") as Material;
+        }
         kernel = new float[121];
         angularSpeed = new Vector3(0,0,0);
         StartCoroutine(TrackAngularSpeed());
@@ -50,14 +53,13 @@ public class DynamicSaliencyBlur : MonoBehaviour
         }
     }
 
-    public bool adjustBasedOnRotation;
+    public bool useEditorValue;
     void OnRenderImage(RenderTexture src, RenderTexture dst)
     {
 
         
-        if(adjustBasedOnRotation){
-            sigma = Mathf.Lerp(0.1f, sigmaMaximum, (angularSpeed.magnitude - angularSpeedThreshold) / angularSpeedMaximum );
-            Debug.Log((angularSpeed.magnitude - angularSpeedThreshold) / angularSpeedMaximum);
+        if(!useEditorValue){
+            sigma = Mathf.Lerp(0.01f, sigmaMaximum, (angularSpeed.magnitude - angularSpeedThreshold) * angularSpeedModifier );
         }
 
         kernel = new float[121];
@@ -82,17 +84,17 @@ public class DynamicSaliencyBlur : MonoBehaviour
 
         //communicate kernel through skybox
         //float[] kernel = {2f,2fs,2f};
-        saliencyBlurMaterial.SetFloatArray("_kernel",kernel);
-        saliencyBlurMaterial.SetFloat("_kernelSum", kernelSum);
-        saliencyBlurMaterial.GetFloatArray("_kernel");
-        saliencyBlurMaterial.SetFloat("_brightnessThreshold", brightnessThreshold);
-        saliencyBlurMaterial.SetFloat("_redThreshold", redThreshold);
-        saliencyBlurMaterial.SetFloat("_greenThreshold", greenThreshold);
-        saliencyBlurMaterial.SetFloat("_blueThreshold", blueThreshold);
-        if(darkSaliency){
-            saliencyBlurMaterial.SetFloat("_darkSaliency", 1);
+        blurMaterial.SetFloatArray("_kernel",kernel);
+        blurMaterial.SetFloat("_kernelSum", kernelSum);
+        blurMaterial.GetFloatArray("_kernel");
+        blurMaterial.SetFloat("_brightnessThreshold", brightnessThreshold);
+        blurMaterial.SetFloat("_redThreshold", redThreshold);
+        blurMaterial.SetFloat("_greenThreshold", greenThreshold);
+        blurMaterial.SetFloat("_blueThreshold", blueThreshold);
+        if(flipThresholds){
+            blurMaterial.SetFloat("_darkSaliency", 1);
         }else{
-            saliencyBlurMaterial.SetFloat("_darkSaliency", 0);
+            blurMaterial.SetFloat("_darkSaliency", 0);
         }
         
 
@@ -104,7 +106,7 @@ public class DynamicSaliencyBlur : MonoBehaviour
         for (int i = 0; i < smoothness; i++)
         {
             RenderTexture tempTexture = RenderTexture.GetTemporary(src.width, src.height); //creates a quick temporary texture for calculations
-            Graphics.Blit(renderTexture, tempTexture, saliencyBlurMaterial);
+            Graphics.Blit(renderTexture, tempTexture, blurMaterial);
             RenderTexture.ReleaseTemporary(renderTexture); //releases the temporary texture we got from GetTemporary 
             renderTexture = tempTexture;
         }

@@ -10,7 +10,6 @@ using UnityEditor;
 [ExecuteInEditMode]
 public class SingleNose : MonoBehaviour
 {
-    GameObject noseModel;
     GameObject cameraObject;
     
     [Range(0,1)]
@@ -29,14 +28,11 @@ public class SingleNose : MonoBehaviour
 
     void Awake()
     {
-        noseModel = transform.GetChild(0).gameObject;
-
-
         //if we found the main camera, set ourselves up as a child
         cameraObject = transform.parent.gameObject;
         if(cameraObject != null){
-            noseModel.transform.parent = cameraObject.transform;
-            noseModel.transform.localPosition = new Vector3(0,0,0);
+            transform.parent = cameraObject.transform;
+            transform.localPosition = new Vector3(0,0,0);
         }
     }
 
@@ -44,22 +40,18 @@ public class SingleNose : MonoBehaviour
     
     void Update()
     {
-        
-        if(noseModel.activeSelf == true){
-            float zPos = Mathf.Lerp(0.4f, 0.8f, zPosition);
-            float yPos = Mathf.Lerp(-0.5f, 0.5f, yPosition);
-            float xScale = Mathf.Lerp(0.05f,.15f, noseWidth);
-            float yScale = Mathf.Lerp(0.05f, .25f, 1 - noseFlatness);
-            float zScale = Mathf.Lerp(.03f, .15f, .5f);
+        float zPos = Mathf.Lerp(0.4f, 0.8f, zPosition);
+        float yPos = Mathf.Lerp(-0.5f, 0.5f, yPosition);
+        float xScale = Mathf.Lerp(0.05f,.15f, noseWidth);
+        float yScale = Mathf.Lerp(0.05f, .25f, 1 - noseFlatness);
+        float zScale = Mathf.Lerp(.03f, .15f, .5f);
 
-            noseModel.transform.localScale = new Vector3(xScale,yScale,zScale);
+        transform.localScale = new Vector3(xScale,yScale,zScale);
         
-            noseModel.transform.localPosition = new Vector3(noseModel.transform.localPosition.x, 
+        transform.localPosition = new Vector3(transform.localPosition.x, 
                                                         yPos, 
                                                         zPos);
         
-            noseModel.gameObject.GetComponent<Renderer>().sharedMaterial.color = noseColor;
+        GetComponent<Renderer>().sharedMaterial.color = noseColor;
         }
-        
     }
-}

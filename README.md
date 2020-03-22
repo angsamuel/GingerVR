@@ -1,5 +1,5 @@
 # Cybersickness Reduction Techniques
- This is a collection of programatic techniques to help reduce cybersickness when using head mounted displays. To make use of these techniques, drag the GingerVR-master folder into your project's resources folder.
+ This is a collection of programatic techniques to help reduce cybersickness when using head mounted displays.
 
 ## Techniques
 The following techniques can be found in the Prefabs and Scripts folders. Instructions on how to set them up are given below.
@@ -24,7 +24,7 @@ Wienrich, Carolin, et al. "A Virtual Nose as a Rest-Frame-The Impact on Simulato
 ### AuthenticNose
 The AuthenticNose prefab acts as a rest-frame for the user.
 
-AuthenticNose must be used with a two camera VR setup (one camera per eye). First attach the prefab to one of the user's cameras. Assign each nose model a unique layer. Then ensure that each camera has had one of these layers unchecked from the culling mask dropdown menu. Configure the noses in the Unity Editor with the following options:
+To use AuthenticNose prefab must be used in tandem with the OVRCameraRig asset from the Unity Standard Assets package. Click the “Use Per Eye Camera” box on the OVRCameraRig. Drag the DoubleNose  prefab into the scene, and AuthenticNose will automatically attach two nose models, one to each per eye camera. Each nose model is only visible through the corresponding camera, providing a more realistic representation of a human nose. Configure the noses in the Unity Editor with the following options:
 * Spacing(slider) - configures how far apart the two nose models are.
 * Y Position(slider) -configures the y-axis position of the nose
 * Z Position (slider) - configures the z-axis position of the nose
@@ -47,20 +47,19 @@ To use DynamicGaussianBlur, attach the script to the main camera, and configure 
 * Angular Speed Threshold (float) - the speed (degrees per second) at which the user’s vision begins blurring.
 * Angular Speed Maximum (float) - the speed (degrees per second) at which the image is blurred as much as Sigma Maximum allows.
 * Smoothness (slider) - the number of times the effect is applied. A higher value will result in smoother blurring.
-* Acceleration Modifier (float) - determines the sensativity of the effect to head acceleration. 
-* Use Editor Value (bool) - controls whether the blur is impacted by rotation, or set to the constant values set in the editor.
+* Adjust Based on Rotation (bool) - controls whether the blur is impacted by rotation, or set to the constant values set in the editor.
 
 Our implementation was inspired by the following:
 
 Budhiraja, Pulkit, et al. "Rotation blurring: use of artificial blurring to reduce cybersickness in virtual reality first person shooters." arXiv preprint arXiv:1710.02599 (2017).
 
-### DynamicColorBlur 
+### ColorBlur 
 The ColorBlur script dynamically blurs the user’s vision based on their translational speed. Portions of the image surpassing the specified color thresholds (i.e. brightness) are not dynamically blurred. 
 
-To use DynamicColorBlur, attach the script to the main camera, and configure with the following options:
+To use ColorBlur, attach the script to the main camera, and configure with the following options:
 * Sigma Maximum (float) - the maximum sigma value that can be used in the gaussian function (larger sigma value = more blurring).
 * Angular Speed Threshold (float) - the speed (degrees per second) at which the user’s vision begins blurring.
-* Angular Speed Modifier (float) - controls the sensativity of the blur based on speed.
+* Angular Speed Maximum (float) - the speed (degrees per second) at which the image is blurred as much as Sigma Maximum allows.
 * Smoothness (slider) - the number of times the effect is applied. A higher value will result in smoother blurring.
 * Brightness Threshold (slider) - portions of the image with combined RGB valuesa combined RGB values above this will not be blurred. 
 * Red Threshold (slider) - portions of the image with red values above this will not be blurred. 
@@ -73,7 +72,7 @@ Our implementation was inspired by the following:
 
 Nie, Guang-Yu, et al. "Analysis on Mitigation of Visually Induced Motion Sickness by Applying Dynamical Blurring on a User's Retina." IEEE transactions on visualization and computer graphics (2019).
 
-### DynamicFOV - Note: Currently experiencing issues in latest version of Unity
+### DynamicFOV
 The DynamicFOV script dynamically reduces the user’s field of view (FOV) based on their translational and angular speed. The rate of change in FOV is calculated with the following formula.
 
  CRate = Abs(angularSpeed * angularSpeedModifier) + (translationalSpeed ∗ translationalSpeedModifier)

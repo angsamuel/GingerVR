@@ -8,13 +8,14 @@ public class DynamicFOV : MonoBehaviour
 {
     //VignetteModel.Settings vignetteSettings;
     //public PostProcessingProfile profile;
+    public GameObject player;
+    public Material circleEffectMaterial; //create material from shader and attatch here
 
     public float decaySpeed = 20f; 
 
     public float minViewValue = .5f;
     public float maxViewValue = 1.5f;
-    public Material circleEffectMaterial; //create material from shader and attatch here
-    public GameObject player;
+    
 
     Vector3 lastPosition;
     Vector3 lastOrientation;
@@ -22,10 +23,9 @@ public class DynamicFOV : MonoBehaviour
     Rigidbody rigidbody;
     bool usingRigidbody;
 
-    [Range(100,128)]
     public float decayRate = -.001f;
     public float angluarSpeedModifier = .1f;
-    public float overallSpeedModifier = .1f;
+    public float translationSpeedModifier = .1f;
     public float testRad = .5f;
     
 
@@ -61,10 +61,15 @@ public class DynamicFOV : MonoBehaviour
     void Start()
     {
 
+        if(player == null){
+            player = this.gameObject;
+        }
+        if(circleEffectMaterial == null){
+            circleEffectMaterial = Resources.Load("GingerVR-master/SicknessReductionTechniques/Materials/CircleEffectMat") as Material;
+        }
 
         lastPosition = player.transform.position;
         lastOrientation = player.transform.eulerAngles;
-        //StartCoroutine(CalculateSpeed());
 
         rigidbody = player.GetComponent<Rigidbody>();
         if(rigidbody == null){
@@ -96,10 +101,8 @@ public class DynamicFOV : MonoBehaviour
         rotationalSpeed = angularVelocity.magnitude;
      
 
-        float cRate = ((translationalSpeed - decaySpeed) * overallSpeedModifier) + (rotationalSpeed*angluarSpeedModifier);
+        float cRate = ((translationalSpeed - decaySpeed) * translationSpeedModifier) + (rotationalSpeed*angluarSpeedModifier);
 
-       // Debug.Log(viewRadius);
-       // Debug.Log("C RATE: " + cRate);
 
         
         if(translationalSpeed <= decaySpeed){
@@ -110,7 +113,6 @@ public class DynamicFOV : MonoBehaviour
             viewRadius -= cRate;
             
         }
-        Debug.Log("starto: " + viewRadius);
         if(viewRadius > maxViewValue){
                 viewRadius = maxViewValue;
                 
@@ -118,20 +120,9 @@ public class DynamicFOV : MonoBehaviour
         if(viewRadius < minViewValue){
                 viewRadius = minViewValue;
         }
-        Debug.Log("endo: " + viewRadius);
 
         circleEffectMaterial.SetFloat("_viewRadius", viewRadius);
 
-        // if(leftEye){
-        //     circleEffectMaterial.SetFloat("_leftEye", 1);
-        // }else{
-        //     circleEffectMaterial.SetFloat("_leftEye", 0);
-        // }
-        // if(rightEye){
-        //     circleEffectMaterial.SetFloat("_rightEye", 1);
-        // }else{
-        //     circleEffectMaterial.SetFloat("_rightEye", 0);
-        // }
         
         lastPosition = player.transform.position;
         

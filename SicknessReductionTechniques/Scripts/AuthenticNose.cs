@@ -61,7 +61,7 @@ public class AuthenticNose : MonoBehaviour
                                                             yPos, 
                                                             zPos);
 
-            leftEyeNoseModel.gameObject.GetComponent<Renderer>().material.color = noseColor;
+            leftEyeNoseModel.gameObject.GetComponent<Renderer>().sharedMaterial.color = noseColor;
 
 
             rightEyeNoseModel.transform.localScale = new Vector3(xScale,yScale,zScale);
@@ -70,7 +70,7 @@ public class AuthenticNose : MonoBehaviour
                                                             yPos, 
                                                             zPos);
                                                             
-            rightEyeNoseModel.gameObject.GetComponent<Renderer>().material.color = noseColor;
+            rightEyeNoseModel.gameObject.GetComponent<Renderer>().sharedMaterial.color = noseColor;
         }                                             
     }
 }
