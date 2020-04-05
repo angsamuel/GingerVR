@@ -34,7 +34,7 @@ public class DynamicColorBlur : MonoBehaviour
     void Start(){
         //initialize to some random matrix
         if(blurMaterial == null){
-            blurMaterial = Resources.Load("GingerVR-master/SicknessReductionTechniques/Materials/ColorBlurMat") as Material;
+            blurMaterial = Resources.Load("GingerVR-master/SicknessReductionTechniques/DynamicColorBlur/ColorBlurMat") as Material;
         }
         kernel = new float[121];
         angularSpeed = new Vector3(0,0,0);

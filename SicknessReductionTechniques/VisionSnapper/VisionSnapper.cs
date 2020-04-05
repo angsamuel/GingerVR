@@ -30,6 +30,9 @@ public class VisionSnapper : MonoBehaviour
         if(cameraObject == null){
             cameraObject = Camera.main.gameObject;
         }
+        if(visionSnapperMaterial == null){
+            visionSnapperMaterial = Resources.Load("GingerVR-master/SicknessReductionTechniques/VisionSnapper/VisionSnapperMat") as Material;
+        }
         
         yRotator.transform.position = cameraObject.transform.position;
         yRotator.transform.parent = cameraObject.transform.parent;
