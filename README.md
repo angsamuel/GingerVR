@@ -125,6 +125,21 @@ Our implementation was inspired by the following:
 
 Kemeny, Andras, et al. "New vr navigation techniques to reduce cybersickness." Electronic Imaging 2017.3 (2017): 48-53.
 
+
+### VirtualCAVE 
+
+The VirtualCAVE asset spawns a wireframe cube around the user. This cube follows, and rotates along with the user to simulate a cave automatic virtual environment. To use VirtualCAVE, simply drag the asset onto the user’s virtual camera in the scene. The asset will spawn the wireframe cube at runtime. The following settings can then be adjusted through the editor.
+
+* Width (slider) - determines the width of the box.
+* Height (slider) - determines the height of the box.
+* Depth (slider) - determines the depth of the box.
+* Line Thickness (slider) - determines the thickness of the lines used to generate the box.
+
+This approach was inspired by the following paper: 
+Nguyen-Vo, Thinh, Bernhard E. Riecke, and Wolfgang Stuerzlinger. "Simulated reference frame: A cost-effective solution to improve spatial orientation in vr." 2018 IEEE Conference on Virtual Reality and 3D User Interfaces (VR). IEEE, 2018.
+
+
+
 ## Utilities
 These can be found in the Utilities folder. These are tools to help set up the techniques.
 
@@ -132,3 +147,4 @@ These can be found in the Utilities folder. These are tools to help set up the t
 The FOVUtility allows you to measure the user’s field of view (FOV), as Unity’s Camera.fieldOfView does not currently support head mounted displays. 
 
 To use the FOVUtility, first drag the prefab into the scene. A bar will appear in front of the user’s vision. Select diagonal, horizontal, or vertical from the drop down menu to select the type of FOV you would like to measure. Then drag the Stick Horizontal Scale and Stick Vertical Scale slider until the bar reaches the edges of the user’s vision. The Horizontal FOV, Vertical FOV, and Diagonal FOV fields on the game object will update in real time to show you the user’s FOV. 
+
